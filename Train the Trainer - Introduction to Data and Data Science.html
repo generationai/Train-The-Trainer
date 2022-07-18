@@ -1,0 +1,226 @@
+<!DOCTYPE HTML>
+<html lang="en" dir="ltr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript" src="/assets/softchalk/scripts/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/softchalk/scripts/jquery-ui-1.8.12.min.js"></script>
+    <script type="text/javascript" src="/js/serve/iosFix.js"></script>
+    <script type="text/javascript" src="/js/modernizr-custom.js"></script>
+
+    <script type="text/javascript">
+        let _href = window.location.href;
+
+            function setSizes() {
+                var containerHeight = document.getElementById("mainwrapper").clientHeight;
+                var newHeight = (containerHeight - 37);
+                document.getElementById("SCLBIndexPage").setAttribute("style", "height:" + newHeight + "px");
+            }
+
+            ready(function(){
+                document.getElementById("SCLBIndexPage").onload = function(){
+                    setSizes();
+                    setTitle();
+                }
+            });
+
+            window.addEventListener('resize', function(event){
+                setSizes();
+            });
+
+    </script>
+
+    <base href="https://softchalkcloud.com/lesson/files/uZYnkAx9mHGPdi/" />
+    <title></title>
+    <style>
+        * { margin: 0;}
+        html, body {width:100%; height:100%; overflow:hidden;}
+        .main {padding:0; width:100%;min-height:100%; height: 100%; margin-bottom: -37px; overflow:hidden;} 
+        .license {position: fixed; clear: both; width:100%; height:37px;}
+        #SCLBIndexPage { border: 0px !important; }
+        
+        #modal_underlay {
+            position: fixed;
+            z-index:100;
+            top: 0px;
+            left: 0px;
+            height:100%;
+            width:100%;
+            background: #000;
+            display: none;
+        }
+
+        #simple_overlay {
+            padding: 30px; 
+            width: 400px;
+            background: #fff;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            box-shadow: 0px 0px 4px rgba(0,0,0,0.7);
+            -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
+            -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            display: none;
+        }
+
+        #simple_overlay p {
+            color: #444;
+            text-shadow: none;
+            padding-bottom: 10px;
+        }
+
+        #simple_overlay a {
+            text-decoration: none;
+            color: rgb(13, 116, 242);
+            font-weight: 600;
+        }
+
+        #simple_overlay a:hover {
+            text-decoration: underline;
+        }
+
+        #simple_overlay a:active {
+            text-decoration: underline;
+        }
+
+        #simple-overlay-header {
+            display: none;
+            width: 100%;
+            height: 10px;
+            color: rgb(32, 80, 129);
+            text-align: center;
+            font-weight: 500;
+            padding-bottom: 15px;
+            border-bottom-color: #000000;
+            border-bottom-style: solid;
+            border-bottom-width: thin;
+        }
+
+        .no-close .ui-dialog-titlebar-close {
+            display: none;
+        } 
+    </style>
+</head>
+<body>
+    <div id="simple_overlay">
+        <div id="simple-overlay-header">
+            SoftChalk Scorecenter
+        </div>
+        <p>
+            Because of your web browser settings, this SoftChalk lesson could
+            not connect to the SoftChalk ScoreCenter to record your scores.
+        </p>
+        <p>
+            Please use a different web browser or make changes to your current
+            web browser to allow cookies from https://softchalkcloud.com.
+        </p>
+        <p>
+            For details, please see our <a href="https://softchalk.atlassian.net/wiki/spaces/SKB/pages/156664316" target="_blank">instructions</a>.
+        </p>
+    </div>
+
+    <div id="mainwrapper" class="main">
+        <iframe id="SCLBIndexPage" name="SCLB" msallowfullscreen allowfullscreen mozallowfullscreen oallowfullscreen webkitallowfullscreen width="100%" height="100%"
+                src="index.html?&amp;"></iframe>
+    </div>
+        <div class="license">
+            <iframe width="100%" src="license.html?&amp;">
+            </iframe>
+        </div>
+
+    <script type="text/javascript">
+    function show_simple_overlay(overlay_id, _kwargs) {
+        // builds a generic modal overlay. non-closable by default, with no
+        // buttons, or close-text
+
+        // _kwargs is a map of (key,value) pairs to allow for optional args
+        var kwargs = _kwargs || {};
+        var button_text = kwargs['button_text'] || "";
+        var append_elem = kwargs['append_to'] || "body";
+        var with_header = kwargs['use_header'] || false;
+
+        var underlay_cls = "#modal_underlay";
+        var underlay = $("<div id='modal_underlay'></div>");
+
+        $(append_elem).append(underlay);
+
+        $(underlay_cls)
+            .fadeTo(200, 0.5)
+            .css({
+                'display': 'block',
+                opacity: 0
+            });
+
+        ($(overlay_id)
+            .css({
+                'position': 'fixed',
+                'display': 'inline',
+                'top': 25 + '%',
+                'left': 25 + "%",
+                'z-index': 11000,
+                'max-width': 50 + "%"})
+            .dialog({
+                width: 50 + "%",
+                dialogClass: "no-close",
+                closeOnEscape: false,
+            })
+        );
+
+        if (with_header) {
+            $("#simple-overlay-header")
+                .css({
+                    'display': 'block'
+                })
+            $("#simple_overlay")
+                .css({
+                    'padding': '20px 40px 40px 40px'
+                })
+        }
+    }
+
+    function got_cookies() {
+        // test for cookie and storage access
+        if (Modernizr.sessionstorage && Modernizr.cookies) {
+            // clear session storage
+            window.sessionStorage.clear();
+            return true;
+        }
+        return false;
+    }
+
+    function check_scorecenter_url(url) {
+        /**
+          * Search the document href for the scorecenter URL. This currently
+          * only checks for the LTI URL.
+          */
+        if (url.search("scorecenter/lti") > 0) {
+            return true;
+        }
+        else {
+        }   return false;
+    }
+
+    function setTitle() {
+        /**
+         * Sets the title of the serve page from the contentDocument of the
+         * childFrame as each lesson page is loaded. This is done to improve
+         * accessibility, especially for screen readers.
+         */
+        var childframe = document.getElementById("SCLBIndexPage");
+        var doc = childframe.contentDocument;
+        document.title = doc.title;
+    }
+
+    let in_scorecenter_mode = check_scorecenter_url(_href);
+
+    if (in_scorecenter_mode) {
+        if (!got_cookies()) {
+            show_simple_overlay("#simple_overlay", {});
+        }
+    }
+    </script>
+</body>
+</html>
